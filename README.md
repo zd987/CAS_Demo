@@ -84,3 +84,148 @@ Cas_client_demo项目中修改 /cas_client_demo/src/main/resources/config/jdbc.p
 进入真正的应用界面。可以看到相关的身份信息显示。点击logout后就会退出系统。至此，整个系统的注册和登陆流程测试完毕。
 
 ![browser_demo6.png](doc/images/browser_demo6.png)
+
+开发注意事项
+--
+1.Cas_server_demo这部分不需要关注，只要求可以正确运行即可。我们这里主要关注cas_client_demo的开发工作。
+
+2.首先关注pom.xml文件，需要添加
+
+```xml
+<!-- cas client add -->
+<dependency>
+    <groupId>org.jasig.cas.client</groupId>
+	<artifactId>cas-client-core</artifactId>
+	<version>3.2.1</version>
+	<exclusions>
+		<exclusion>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</exclusion>
+	</exclusions>
+</dependency>
+<!-- cas client add -->
+```
+
+3.接下来是web.xml文件，主要是添加cas相关的Listener，Filter和FilterMapping。
+
+```xml
+<!-- cas add -->
+<listener>
+    <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+</listener>
+
+<!-- Start cas filter -->
+<filter>
+	<filter-name>CAS Single Sign Out Filter</filter-name>
+	<filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+</filter>
+
+<filter>
+	<filter-name>CAS Authentication Filter</filter-name>
+	<filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
+	<init-param>
+		<param-name>casServerLoginUrl</param-name>
+		<param-value>https://localhost:8443/cas/login</param-value>
+	</init-param>
+	<init-param>
+		<param-name>serverName</param-name>
+		<param-value>http://localhost:8080</param-value>  <!-- 注意：此处更新之后要替换为本地容器对应的端口 -->
+	</init-param>
+	<init-param>
+		<param-name>renew</param-name>
+		<param-value>false</param-value>
+	</init-param>
+	<init-param>
+		<param-name>gateway</param-name>
+		<param-value>false</param-value>
+	</init-param>
+</filter>
+
+<filter>
+	<filter-name>CAS Validation Filter</filter-name>
+	<filter-class>org.jasig.cas.client.validation.Cas10TicketValidationFilter</filter-class>
+	<init-param>
+		<param-name>casServerUrlPrefix</param-name>
+		<param-value>http://localhost:8080/cas</param-value>
+	</init-param>
+	<init-param>
+		<param-name>serverName</param-name>
+		<param-value>http://localhost:8080</param-value>  <!-- 注意：此处更新之后要替换为本地容器对应的端口 -->
+	</init-param>
+</filter>
+
+<filter>
+	<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+	<filter-class>org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class>
+</filter>
+
+<filter>
+	<filter-name>CAS Assertion Thread Local Filter</filter-name>
+	<filter-class>org.jasig.cas.client.util.AssertionThreadLocalFilter</filter-class>
+</filter>
+<!-- End cas filter -->
+
+<!-- Start cas filter-mapping -->
+<filter-mapping>
+	<filter-name>CAS Single Sign Out Filter</filter-name>
+	<url-pattern>/pages/*</url-pattern>
+</filter-mapping>
+<filter-mapping>
+	<filter-name>CAS Single Sign Out Filter</filter-name>
+	<url-pattern>*.action</url-pattern>
+</filter-mapping>
+
+<filter-mapping>
+	<filter-name>CAS Authentication Filter</filter-name>
+	<url-pattern>/pages/*</url-pattern>
+</filter-mapping>
+<filter-mapping>
+	<filter-name>CAS Authentication Filter</filter-name>
+	<url-pattern>*.action</url-pattern>
+</filter-mapping>
+
+<filter-mapping>
+	<filter-name>CAS Validation Filter</filter-name>
+	<url-pattern>/pages/*</url-pattern>
+</filter-mapping>
+<filter-mapping>
+	<filter-name>CAS Validation Filter</filter-name>
+	<url-pattern>*.action</url-pattern>
+</filter-mapping>
+
+<filter-mapping>
+	<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+	<url-pattern>/pages/*</url-pattern>
+</filter-mapping>
+<filter-mapping>
+	<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+	<url-pattern>*.action</url-pattern>
+</filter-mapping>
+
+<filter-mapping>
+	<filter-name>CAS Assertion Thread Local Filter</filter-name>
+	<url-pattern>/pages/*</url-pattern>
+</filter-mapping>
+<filter-mapping>
+	<filter-name>CAS Assertion Thread Local Filter</filter-name>
+	<url-pattern>*.action</url-pattern>
+</filter-mapping>
+<!-- End cas filter-mapping -->
+<!-- cas add -->
+
+<filter>
+	<filter-name>identity</filter-name>
+	<filter-class>com.bcc.rnd.user.common.IdentityInfoFilter</filter-class>
+</filter>
+<filter-mapping>
+	<filter-name>identity</filter-name>
+	<url-pattern>/pages/*</url-pattern>
+</filter-mapping>
+<filter-mapping>
+	<filter-name>identity</filter-name>
+	<url-pattern>*.action</url-pattern>
+</filter-mapping>
+```
+
+4.然后实现一个com.bcc.rnd.user.common.IdentityInfoFilter，这个filter主要是在用户登陆时候判断是否是首次登陆，如果是首次登陆则需要进入资料完善界面。否则从数据库中获取用户资料，存入session。
