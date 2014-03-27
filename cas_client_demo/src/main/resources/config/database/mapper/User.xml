@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="USER">
+	<resultMap id="User" type="User">
+		<result property="username" column="username" />
+		<result property="app_attribute_1" column="app_attribute_1" />
+	</resultMap>
+	
+	<select id="getUser" resultMap="User" parameterType="String">
+		select * from
+		cas_client_demo.user where username = #{username};
+	</select>
+
+	<insert id="insUser" parameterType="User">
+	<![CDATA[
+	        insert into cas_client_demo.user (	        	
+	        	username ,
+	        	app_attribute_1       	
+	        ) values (	        	
+	        	#{username} ,
+	        	#{app_attribute_1}
+	        )
+	    ]]>
+	</insert>
+
+	<delete id="delUser" parameterType="String">
+		delete from cas_client_demo.user where username = #{username};
+	</delete>
+	
+	<update id="updUser" parameterType="User">
+		update cas_client_demo.user
+		<set>
+		<if test="username != null">user.username = #{username},</if>
+		<if test="app_attribute_1 != null">user.username = #{app_attribute_1},</if>
+		</set>
+		where user.username = #{username};
+	</update>
+</mapper> 

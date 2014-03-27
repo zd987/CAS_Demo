@@ -1,0 +1,93 @@
+.tab-choose-item a {
+    display: block;
+    height: 68px;
+    text-indent: -9999em;
+}
+.tab-choose-item-personal-b a {
+    background-position: 0 0;
+    width: 388px;
+}
+.btn-business, .tab-choose-item a, .tab-choose-item-business-b .arrow, .link-trigger a, .list-rule-item {
+    background-image: url("https://i.alipayobjects.com/e/201209/1KDDDDe5C8.png");
+    background-repeat: no-repeat;
+}
+.link-trigger {
+    background: none repeat scroll 0 0 #F7F7F7;
+    border-bottom: 1px solid #F0F0F0;
+    border-top: 1px solid #F0F0F0;
+    cursor: pointer;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 190px;
+}
+.box-shadow {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: -moz-use-text-color #E7E7E7 #E7E7E7;
+    border-image: none;
+    border-right: 1px solid #E7E7E7;
+    border-style: none solid solid;
+    border-width: medium 1px 1px;
+    box-shadow: 0 0 5px #C7C5C5;
+    width: 776px;
+}
+#footer {
+    background: none repeat scroll 0 0 #F4F4F4;
+    border-top: 2px solid #E9E9E9;
+}
+.copyright,.copyright a,.copyright a:hover{
+	color:#808080;
+}
+.copyright {
+    padding: 0 220px 20px;
+    width: 300px;
+}
+#new {
+    background-position: -3px -185px;
+}
+.about-item-b {
+    float: left;
+    height: 90px;
+    overflow: hidden;
+    padding-right: 25px;
+    width: 220px;
+}
+.about-item-b, #footer h2 {
+    background-image: url("https://i.alipayobjects.com/e/201209/1DDNcljQr7.png");
+    background-repeat: no-repeat;
+}
+#cheap {
+    background-position: 0 -283px;
+}
+#special {
+    background-position: 0 -379px;
+    width: 288px;
+}
+.about-item-last {
+    padding-right: 0;
+}
+.about-item-b {
+    float: left;
+    height: 90px;
+    overflow: hidden;
+    padding-right: 25px;
+    width: 220px;
+}
+.about-item-b, #footer h2 {
+    background-image: url("https://i.alipayobjects.com/e/201209/1DDNcljQr7.png");
+    background-repeat: no-repeat;
+}
+.about-item-b {
+    float: left;
+    height: 90px;
+    overflow: hidden;
+    padding-right: 25px;
+    width: 220px;
+}
+.about-item-b, #footer h2 {
+    background-image: url("https://i.alipayobjects.com/e/201209/1DDNcljQr7.png");
+    background-repeat: no-repeat;
+}

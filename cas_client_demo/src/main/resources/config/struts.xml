@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- 使struts可以拦截.do .action请求 -->
+	<constant name="struts.action.extension" value="do,action" />
+	
+	<!-- 指定Web应用的默认编码集,相当于调用HttpServletRequest的setCharacterEncoding方法 -->
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	
+	<!-- 配置Convention插件自动重加载映射 -->
+<!-- 	<constant name="struts.convention.classes.reload" value="true" /> -->
+
+	<!-- 当struts.xml改动后，是否重新加载。默认值为false(生产环境下使用),开发阶段最好打开 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+
+	<!-- 是否使用struts的开发模式。开发模式会有更多的调试信息。默认值为false(生产环境下使用),开发阶段最好打开 -->
+	<constant name="struts.devMode" value="false" />
+
+	<!-- 设置浏览器是否缓存静态内容。默认值为true(生产环境下使用),开发阶段最好关闭 -->
+	<constant name="struts.serve.static.browserCache" value="false" />
+	
+	<!--由spring管理struts的Action实例 -->
+	<constant name="struts.objectFactory" value="spring" />
+	
+	<!--动态方法调用，为true时，就可以在struts.xml配置“*”的通配符，来调用action里的方法 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+
+	<!-- 结果资源所在路径 -->
+<!-- 	<constant name="struts.convention.result.path" value="/" /> -->
+	
+	<!-- struts父包 -->
+<!-- 	<constant name="struts.convention.default.parent.package" -->
+<!-- 		value="ccwm" /> -->
+
+	<package name="app" extends="struts-default">
+		<!-- 默认action -->
+		<default-action-ref name="defaultAction"></default-action-ref>
+
+		<action name="defaultAction">
+			<result>JSP/UserLogin.jsp</result>
+		</action>
+	</package>
+
+	<include file="config/struts/struts-user.xml" />
+</struts>
+

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!--指定所用数据库类型（方言） -->
+	<properties>
+		<property name="dialect" value="mysql" />
+	</properties>
+
+	<!-- 全局映射器启用缓存 -->
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+	</settings>
+
+	<!-- 全局别名设置，在映射文件中只需写别名，而不必写出整个类路径 -->
+	<typeAliases>
+		<typeAlias alias="User" type="org.demo.user.bean.User" />
+	</typeAliases>
+
+	<!-- 非注解的sql映射文件配置，如果使用mybatis注解，该mapper无需配置， 但是如果mybatis注解中包含@resultMap注解，则mapper必须配置，给resultMap注解使用 -->
+	<mappers>
+		<mapper resource="config/database/mapper/User.xml" />
+	</mappers>
+</configuration>
